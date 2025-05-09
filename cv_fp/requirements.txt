@@ -1,0 +1,12 @@
+ultralytics
+opencv-python
+numpy
+scipy
+scikit-learn
+fiftyone
+fiftyone-db
+motmetrics
+filterpy
+scikit-image
+lap
+pydantic
