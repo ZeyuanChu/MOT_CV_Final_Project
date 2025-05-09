@@ -17,12 +17,16 @@ np.asfarray = lambda x: np.asarray(x, dtype=float)
 import motmetrics as mm
 from motmetrics import metrics
 
-def evaluate_tracking_performance(tracking_results, ground_truth, frame_count, video_name, model_classes):
+def evaluate_tracking_performance(tracking_results, ground_truth, frame_count, video_name, model_classes, output_dir=None):
     """
     Comprehensive evaluation combining custom metrics and FiftyOne evaluation
     """
-    # Create output directory
-    eval_output_dir = os.path.join('output_files', video_name, 'evaluation_results')
+    # If output_dir is not provided, use the default path
+    if output_dir is None:
+        eval_output_dir = os.path.join('output_files', video_name, 'evaluation_results')
+    else:
+        eval_output_dir = output_dir
+        
     os.makedirs(eval_output_dir, exist_ok=True)
 
     def save_plot(fig, name):

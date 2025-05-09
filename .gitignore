@@ -1,0 +1,9 @@
+# CV Project output and temporary files
+code/output_files/
+code/temp_frames/
+code/models/
+
+# Python cache files
+code/__pycache__/
+*.pyc
+**/__pycache__/
