@@ -1,13 +1,27 @@
 # How to run the code:
 - Run the code with the following command to have a square bounding box:
-    - python3 final_code.py --input_file <filename> --box_type square --output_file <output_filename> --conf_thresh <0.0-1.0> --iou_thresh <0.0-1.0>
-    - python3 final_code.py --input_file input_files/traffic.mp4 --box_type square --output_file traffic_square --conf_thresh 0.3 --iou_thresh 0.3
-    - python3 final_code_colab.py --input_file input_files/traffic.mp4 --box_type square --output_file traffic_square --conf_thresh 0.3 --iou_thresh 0.3
+    ```
+    python3 final_code.py --input_file <filename> --box_type square --output_file <output_filename> --conf_thresh <0.0-1.0> --iou_thresh <0.0-1.0>
+    ```
+    - Example:
+    ```
+    python3 final_code.py --input_file input_files/traffic.mp4 --box_type square --output_file traffic_square --conf_thresh 0.3 --iou_thresh 0.3
+    ```
+    ```
+    python3 final_code_colab.py --input_file input_files/traffic.mp4 --box_type square --output_file traffic_square --conf_thresh 0.3 --iou_thresh 0.3
+    ```
 
 - Run the code with the following command to have a segmentation overlay:
-    - python3 final_code.py --input_file <filename> --box_type overlay --output_file <output_filename> --conf_thresh <0.0-1.0> --iou_thresh <0.0-1.0>
-    - python3 final_code.py --input_file input_files/traffic.mp4 --box_type overlay --output_file traffic_overlay --conf_thresh 0.3 --iou_thresh 0.3
-    - python3 final_code_colab.py --input_file input_files/traffic.mp4 --box_type overlay --output_file traffic_overlay --conf_thresh 0.3 --iou_thresh 0.3
+    ```
+    python3 final_code.py --input_file <filename> --box_type overlay --output_file <output_filename> --conf_thresh <0.0-1.0> --iou_thresh <0.0-1.0>
+    ```
+    - Example:
+    ```
+    python3 final_code.py --input_file input_files/traffic.mp4 --box_type overlay --output_file traffic_overlay --conf_thresh 0.3 --iou_thresh 0.3
+    ```
+    ```
+    python3 final_code_colab.py --input_file input_files/traffic.mp4 --box_type overlay --output_file traffic_overlay --conf_thresh 0.3 --iou_thresh 0.3
+    ```
 
 # How to run the code in Google Colab:
 - Go to the Colab implementation at https://colab.research.google.com/drive/1UgU_yBro7pnM11UKRJfyCd6eiIgn4_sw?usp=sharing
@@ -66,3 +80,32 @@ Results are saved in output_files/<video_name>/evaluation_results/
   - Lower values (0.1-0.2): Easier to track objects between frames, good for fast/distant objects
   - Default (0.3): Balanced tracking
   - Higher values (0.4-0.6): Stricter tracking, better for clear/close objects
+
+# How to run training (Optional unused/train.py is not fully working):
+- The training script is provided for optional custom model training, but pre-trained models are recommended
+- Run training with:
+    ```
+    python3 train.py --data <data.yaml> --base_model <base_model> --save_name <save_name> --epochs <num_epochs> --imgsz <image_size> --batch <batch_size> --device <device> --resume <resume_training>
+    ```
+- Example:
+    ```
+    python3 train.py --data coco.yaml --base_model yolo11x.pt --save_name my_model --epochs 100 --imgsz 640 --batch 16 --device 0
+    ```
+
+## Training Arguments:
+- data: Path to data configuration file (YAML)
+- epochs: Number of training epochs (default: 100) 
+- batch-size: Batch size for training (default: 16)
+- model: Base model to fine-tune (default: yolov11x.pt)
+- device: Training device (cuda device, i.e. 0 or 0,1,2,3 or cpu) (default: 0)
+- workers: Number of worker threads for data loading (default: 8)
+- project: Project name for saving results (default: 'runs/train')
+- name: Experiment name (default: 'exp')
+
+## Notes on Training:
+- Training requires significant GPU resources and time
+- Pre-trained models (yolov11x.pt, yolov11x-seg.pt) are recommended for most use cases
+- Custom training should only be considered if you have:
+  - A specific dataset different from COCO
+  - Need to detect custom object classes
+  - Have sufficient computing resources
